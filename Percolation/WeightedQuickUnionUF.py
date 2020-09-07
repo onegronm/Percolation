@@ -33,7 +33,7 @@ class WeightedQuickUnionUF:
             self.arr[j] = i
             self.size[i] += self.size[j]
 
-        n = len(arr)
+        n = len(self.arr)
         if self.size[i] == n or self.size[j] == n:
             return True;
 

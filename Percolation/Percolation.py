@@ -1,4 +1,4 @@
-import WeightedQuickUnionUF
+from WeightedQuickUnionUF import WeightedQuickUnionUF
 
 class Site:
 	def __init__(self, i):
@@ -13,10 +13,15 @@ class Percolation:
 
 		if n <= 0:
 			raise Exception("n must be greater than zero!")
+		
+		self.length = n
 
 		self.wqu = WeightedQuickUnionUF((n * n) + 2) # two extra values for virtual top and bottom sites
 
 		self.grid = [None] * n # maintain grid representation separate from wqu list
+		
+		for i in range (0, n):
+			self.grid[i] = [None] * n
 
 		self.openCount = 0 # keep track of open sites
 
@@ -32,17 +37,17 @@ class Percolation:
 
 				# connect first row sites to top virtual site
 				if i == 0:
-					top = self.wqu[n * n] # top site is the second to last in wqu list
-					self.wqu.union(val, top)
+					top = self.wqu.arr[n * n] # top site is the second to last in wqu list
+					self.wqu.union(value, top)
 
 				# connect last row sites with bottom virtual site
 				if i == n - 1:
-					bottom = self.wqu[(n * n) + 1] # bottom site is the last in wqu list
-					self.wqu.union(val, bottom)
+					bottom = self.wqu.arr[(n * n) + 1] # bottom site is the last in wqu list
+					self.wqu.union(value, bottom)
 
 	# opens the site (row, col) if it is not open
 	def open(self, row, col):
-		if row >= n or col >= n:
+		if row >= self.length or col >= self.length:
 			raise Exception("Column or row index out of range!")
 
 		site = self.grid[row][col]
@@ -58,35 +63,35 @@ class Percolation:
 			top = self.grid[row - 1][col]
 
 			if top.open:
-				self.wqu.connect(site, top) 
+				self.wqu.union(site.val, top.val) 
 
 		# connect right
-		if col + 1 < n - 1:
+		if col + 1 < self.length - 1:
 			right = self.grid[row][col + 1]
 
 			if right.open:
-				self.wqu.connect(site, right)
+				self.wqu.union(site.val, right.val)
 
 		# connect bottom
-		if row + 1 < n - 1:
+		if row + 1 < self.length - 1:
 			bottom = self.grid[row + 1][col]
 
 			if bottom.open:
-				self.wqu.connect(site, bottom)
+				self.wqu.union(site.val, bottom.val)
 
 		# connect left
 		if col - 1 > 0:
 			left = self.grid[row][col - 1]
 
 			if left.open:
-				self.wqu.connect(site, left)
+				self.wqu.union(site.val, left.val)
 
 		site.full = True
 			
 
 	# is the site (row, col) open?
 	def isOpen(self, row, col):
-		if row >= n or col >= n:
+		if row >= self.length or col >= self.length:
 			raise Exception("Column or row index out of range!")
 		site = self.grid[row][col]
 
@@ -97,7 +102,7 @@ class Percolation:
 
 	# is the site (row, col) full?
 	def isFull(self, row, col):
-		if row >= n or col >= n:
+		if row >= self.length or col >= self.length:
 			raise Exception("Column or row index out of range!")
 
 		site = self.grid[row][col]
@@ -110,9 +115,10 @@ class Percolation:
 
 	# does the system percolate?
 	def percolates(self):
-		top = self.wqu[n * n]
-		bottom = self.wqu[(n * n) + 1]
+		top = self.wqu.arr[self.length * self.length]
+		bottom = self.wqu.arr[(self.length * self.length) + 1]
 
+		print("Percolates: " + str(top == bottom))
 		return top == bottom
 
 

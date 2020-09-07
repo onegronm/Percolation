@@ -1,4 +1,4 @@
-import Percolation
+from Percolation import Percolation
 import random
 
 class PercolationStats:
@@ -15,8 +15,8 @@ class PercolationStats:
 			while not trial.percolates():
 
 				# choose a site at random among all blocked sites
-				i = random(0, n)
-				j = random(0, n)
+				i = random.randint(0, n-1)
+				j = random.randint(0, n-1)
 
 				if trial.isOpen(i, j) or trial.isFull(i,j):
 					continue
