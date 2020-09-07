@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>50c74e2d-ae8a-4b11-bba2-7ba396794a60</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Percolation.py</StartupFile>
+    <StartupFile>PercolationStats.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,6 +22,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Percolation.py" />
+    <Compile Include="PercolationStats.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="WeightedQuickUnionUF.py">
       <SubType>Code</SubType>
     </Compile>
