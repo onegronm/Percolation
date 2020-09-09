@@ -54,39 +54,54 @@ class Percolation:
 
 		if not self.isOpen(row, col):
 			site.open = True
+			site.full = True
 			self.openCount += 1
 
 		# connect to all adjacent open sites:
 
 		# connect top
-		if row - 1 > 0:
+		if row - 1 >= 0:
 			top = self.grid[row - 1][col]
 
-			if top.open:
+			# if the site is open and not previously connected
+			if top.open and not self.wqu.connected(site.val, top.val):
 				self.wqu.union(site.val, top.val) 
+				top.full = True
+				if self.percolates():
+					return
 
 		# connect right
-		if col + 1 < self.length - 1:
+		if col + 1 <= self.length - 1:
 			right = self.grid[row][col + 1]
 
-			if right.open:
+			# if the site is open and not previously connected
+			if right.open and not self.wqu.connected(site.val, right.val):
 				self.wqu.union(site.val, right.val)
+				right.full = True
+				if self.percolates():
+					return
 
 		# connect bottom
-		if row + 1 < self.length - 1:
+		if row + 1 <= self.length - 1:
 			bottom = self.grid[row + 1][col]
 
-			if bottom.open:
+			# if the site is open and not previously connected
+			if bottom.open and not self.wqu.connected(site.val, bottom.val):
 				self.wqu.union(site.val, bottom.val)
+				bottom.full = True
+				if self.percolates():
+					return
 
 		# connect left
-		if col - 1 > 0:
+		if col - 1 >= 0:
 			left = self.grid[row][col - 1]
 
-			if left.open:
+			# if the site is open and not previously connected
+			if left.open and not self.wqu.connected(site.val, left.val):
 				self.wqu.union(site.val, left.val)
-
-		site.full = True
+				left.full = True
+				if self.percolates():
+					return
 			
 
 	# is the site (row, col) open?
@@ -117,8 +132,6 @@ class Percolation:
 	def percolates(self):
 		top = self.wqu.arr[self.length * self.length]
 		bottom = self.wqu.arr[(self.length * self.length) + 1]
-
-		print("Percolates: " + str(top == bottom))
 		return top == bottom
 
 

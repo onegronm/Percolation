@@ -24,7 +24,7 @@ class WeightedQuickUnionUF:
         i = self.root(p)
         j = self.root(q)
 
-        if self.size[i] < self.size[j]:
+        if self.size[i] <= self.size[j]:
             # p is smaller, so p is connecte to q
             self.arr[i] = j
             self.size[j] += self.size[i]
