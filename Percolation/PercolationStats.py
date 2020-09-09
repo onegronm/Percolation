@@ -39,7 +39,7 @@ class PercolationStats:
 			print(str(t+1) + " p: " + str(trial.numberOfOpenSites()) + "/" + str(n*n) + " = " + str(p))
 
 			self.sum += p
-			self.results[i] = p
+			self.results[t] = p
 
 	# sample mean of percolation threshold
 	def mean(self):
@@ -64,7 +64,12 @@ class PercolationStats:
 
 
 
-stats = PercolationStats(5, 30)
+stats = PercolationStats(10, 1000)
+print("mean = " + str(stats.mean()))
+print("stddev = " + str(stats.stddev()))
+stats.confidence()
+
+stats = PercolationStats(100, 10)
 print("mean = " + str(stats.mean()))
 print("stddev = " + str(stats.stddev()))
 stats.confidence()

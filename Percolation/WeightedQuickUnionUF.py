@@ -15,7 +15,7 @@ class WeightedQuickUnionUF:
         return p;
 
     def connected(self,p,q):
-        if self.arr[p] == self.arr[q]:
+        if self.root(p) == self.root(q):
             return True;
 
         return False;
@@ -32,12 +32,6 @@ class WeightedQuickUnionUF:
             # q is smaller, so q is connected to p
             self.arr[j] = i
             self.size[i] += self.size[j]
-
-        n = len(self.arr)
-        if self.size[i] == n or self.size[j] == n:
-            return True;
-
-        return False;
 
 
 

@@ -130,8 +130,11 @@ class Percolation:
 
 	# does the system percolate?
 	def percolates(self):
-		top = self.wqu.arr[self.length * self.length]
-		bottom = self.wqu.arr[(self.length * self.length) + 1]
+		#top = self.wqu.arr[self.length * self.length]
+		#bottom = self.wqu.arr[(self.length * self.length) + 1]
+		top = self.wqu.root(self.length * self.length)
+		bottom = self.wqu.root((self.length * self.length) + 1)
+
 		return top == bottom
 
 
